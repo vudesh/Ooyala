@@ -1,0 +1,114 @@
+	<!DOCTYPE html>
+<html>
+	<head><meta charset="utf-8">
+		<title>
+			Ooyala Web Page 
+		</title>
+		<script src='https://player.ooyala.com/v3/19ae359f5174247875e88d5bc2f9ef6?platform=html5-priority'></script>  <!--Ooyala V3 Player Embedded-->
+	//	<link rel="stylesheet" type="text/css" href= "Ooyala.css" />
+		
+		<style>
+		body{
+background-image:url("Images/bg.jpg");
+}
+
+#outer{
+	width: 80%;
+	margin:auto;
+	background-color:silver;
+	background-color:rgba(250,250,250,0.65);
+    border: 1px solid black;
+    padding:2px;				
+	}
+	
+#ooyalaplayer{
+width:60%;
+height:360px;
+margin-left:21%;
+}
+
+#inner
+{
+margin-left:30%;;
+}
+
+
+		</style>
+		
+		<script type="text/javascript">
+		var ooyalaPlayer;
+		function onCreate(ooyalaPlayer) {
+       
+	   ooyalaPlayer.mb.subscribe('playbackReady', 'myPage', function(eventName) //Player message bus event
+	   { 
+	   //Functions
+       document.getElementById('p1').innerHTML = ooyalaPlayer.getCurrentItemTitle();
+       document.getElementById('p2').innerHTML = ooyalaPlayer.getCurrentItemDescription() ;
+       document.getElementById('p3').innerHTML = Math.round(ooyalaPlayer.getTotalTime());
+	   document.getElementById('p4').innerHTML = ooyalaPlayer.getFullscreen();
+	   document.getElementById('p5').innerHTML = ooyalaPlayer.getCurrentItemEmbedCode();
+	   document.getElementById('p7').innerHTML = ooyalaPlayer.getVolume();
+       });
+	   
+	   ooyalaPlayer.mb.subscribe('paused', 'myPage', function(eventName) {
+	   document.getElementById('p6').innerHTML = "Paused";
+	   });
+	   
+	   ooyalaPlayer.mb.subscribe('playing', 'myPage', function(eventName) {
+	   document.getElementById('p6').innerHTML = "Playing";
+	   });
+
+	   };
+	     
+				OO.ready(function() {
+			ooyalaPlayer = OO.Player.create('ooyalaplayer', '', {
+						playlistsPlugin: {"data":["43ff403a93649cb9e9dd33859efa1b5"]},
+						autoplay: true,
+						loop: false,
+						height: 368,
+						width: 800,
+						layout: 'chromeless',
+						useFirstVideoFromPlaylist: true,
+						onCreate: window.onCreate
+						} );
+						});
+ //OO.ready(function() 
+//	{
+//	OO.Player.create('ooyalaplayer','03ZWZrdjqfMpvpYcC-_VNo7bsnDm78kO',{onCreate: window.onCreate}); 
+//	});
+	
+
+	
+		
+		
+		</script>
+	</head>
+	<body>
+	<div  id="outer">
+		<div id='ooyalaplayer'></div>
+		<div id='inner'>
+		
+						
+						
+						<ul>
+							<li><button onclick="ooyalaPlayer.play();">Play Video</button></li>
+							<li><button onclick="ooyalaPlayer.pause();">Pause Video</button></li>
+						</ul>
+					
+		<p><b>Title is:</b><span id='p1'></span></p>
+		<p><b>Description is:</b><span id='p2'></span></p>
+		<p><b>Duration is:</b><span id='p3'></span></p>
+		<p><b>Whether Player is in FullScreen?:</b><span id='p4'></span></p>
+		<p><b>Current Item Embed Code:</b><span id='p5'></span></p>
+		<p><b>Video is:</b><span id='p6'></span></p>
+		<p><b>Volume is(0-Min,1-Max):</b><span id='p7'></span></p>
+		
+		<form action="Ooyala.php" method="POST" id="form">
+		<label><b>Enter the new Title</b></label> 
+		<input type="text" name="request_body" autocomplete="off" placeholder="Enter your new title here"/> 
+		<input type="submit" value="Submit"/>
+		</form>
+		</div>
+	</div>
+	</body>
+</html>
